@@ -22,5 +22,20 @@ public class PalindromeCheckerApp {
         } else {
             System.out.println(word + " is not a Palindrome");
         }
+
+        // UC3: Palindrome Check Using String Reverse
+        System.out.println("------------------------------------------");
+        String input = "racecar";
+        String reversedInput = "";
+
+        for (int i = input.length() - 1; i >= 0; i--) {
+            reversedInput = reversedInput + input.charAt(i);
+        }
+
+        if (input.equals(reversedInput)) {
+            System.out.println(input + " is a Palindrome");
+        } else {
+            System.out.println(input + " is not a Palindrome");
+        }
     }
 }
