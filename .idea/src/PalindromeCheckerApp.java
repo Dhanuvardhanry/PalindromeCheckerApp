@@ -1,19 +1,5 @@
 public class PalindromeCheckerApp {
 
-    // Recursive method to check palindrome
-    static boolean isPalindrome(String str, int start, int end) {
-        // Base condition
-        if (start >= end) {
-            return true;
-        }
-        // Compare first and last characters
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-        // Recursive call
-        return isPalindrome(str, start + 1, end - 1);
-    }
-
     public static void main(String[] args) {
 
         System.out.println("==========================================");
@@ -23,16 +9,24 @@ public class PalindromeCheckerApp {
         System.out.println("Version: 1.0");
         System.out.println("==========================================");
 
-        // UC9: Recursive Palindrome Checker
+        // UC10: Case-Insensitive & Space-Ignored Palindrome
         System.out.println("------------------------------------------");
-        String uc9Word = "kayak";
+        String uc10Word = "A man a plan a canal Panama";
 
-        boolean result = isPalindrome(uc9Word, 0, uc9Word.length() - 1);
+        // Step 1: Normalize - remove spaces and convert to lowercase
+        String normalized = uc10Word.replaceAll("\\s+", "").toLowerCase();
 
-        if (result) {
-            System.out.println(uc9Word + " is a Palindrome");
+        // Step 2: Reverse normalized string
+        String reversed = "";
+        for (int i = normalized.length() - 1; i >= 0; i--) {
+            reversed = reversed + normalized.charAt(i);
+        }
+
+        // Step 3: Compare
+        if (normalized.equals(reversed)) {
+            System.out.println(uc10Word + " is a Palindrome");
         } else {
-            System.out.println(uc9Word + " is not a Palindrome");
+            System.out.println(uc10Word + " is not a Palindrome");
         }
     }
 }
