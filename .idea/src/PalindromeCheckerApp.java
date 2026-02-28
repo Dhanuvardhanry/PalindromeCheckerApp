@@ -1,16 +1,56 @@
+import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class PalindromeCheckerApp {
 
-    // Encapsulated PalindromeChecker class
-    static class PalindromeChecker {
+    // Strategy Interface
+    interface PalindromeStrategy {
+        boolean check(String word);
+    }
 
-        // Single Responsibility: only checks palindrome
-        public boolean checkPalindrome(String word) {
-            String normalized = word.replaceAll("\\s+", "").toLowerCase();
-            String reversed = "";
-            for (int i = normalized.length() - 1; i >= 0; i--) {
-                reversed = reversed + normalized.charAt(i);
+    // Stack Strategy Implementation
+    static class StackStrategy implements PalindromeStrategy {
+        public boolean check(String word) {
+            Stack<Character> stack = new Stack<>();
+            for (int i = 0; i < word.length(); i++) {
+                stack.push(word.charAt(i));
             }
-            return normalized.equals(reversed);
+            String reversed = "";
+            while (!stack.isEmpty()) {
+                reversed = reversed + stack.pop();
+            }
+            return word.equals(reversed);
+        }
+    }
+
+    // Deque Strategy Implementation
+    static class DequeStrategy implements PalindromeStrategy {
+        public boolean check(String word) {
+            Deque<Character> deque = new ArrayDeque<>();
+            for (int i = 0; i < word.length(); i++) {
+                deque.addLast(word.charAt(i));
+            }
+            while (deque.size() > 1) {
+                if (deque.removeFirst() != deque.removeLast()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    // Context class that uses strategy
+    static class PalindromeChecker {
+        private PalindromeStrategy strategy;
+
+        // Inject strategy at runtime
+        public PalindromeChecker(PalindromeStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        public boolean check(String word) {
+            return strategy.check(word);
         }
     }
 
@@ -23,25 +63,27 @@ public class PalindromeCheckerApp {
         System.out.println("Version: 1.0");
         System.out.println("==========================================");
 
-        // UC11: Object-Oriented Palindrome Service
+        // UC12: Strategy Pattern for Palindrome Algorithms
         System.out.println("------------------------------------------");
+        String word = "racecar";
 
-        // Create object of PalindromeChecker
-        PalindromeChecker checker = new PalindromeChecker();
-
-        String word1 = "madam";
-        String word2 = "hello";
-
-        if (checker.checkPalindrome(word1)) {
-            System.out.println(word1 + " is a Palindrome");
+        // Using Stack Strategy
+        PalindromeChecker stackChecker = new PalindromeChecker(new StackStrategy());
+        System.out.println("Stack Strategy:");
+        if (stackChecker.check(word)) {
+            System.out.println(word + " is a Palindrome");
         } else {
-            System.out.println(word1 + " is not a Palindrome");
+            System.out.println(word + " is not a Palindrome");
         }
 
-        if (checker.checkPalindrome(word2)) {
-            System.out.println(word2 + " is a Palindrome");
+        // Using Deque Strategy
+        System.out.println("------------------------------------------");
+        PalindromeChecker dequeChecker = new PalindromeChecker(new DequeStrategy());
+        System.out.println("Deque Strategy:");
+        if (dequeChecker.check(word)) {
+            System.out.println(word + " is a Palindrome");
         } else {
-            System.out.println(word2 + " is not a Palindrome");
+            System.out.println(word + " is not a Palindrome");
         }
     }
 }
