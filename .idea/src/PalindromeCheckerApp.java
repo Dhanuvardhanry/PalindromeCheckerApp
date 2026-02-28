@@ -12,11 +12,9 @@ public class PalindromeCheckerApp {
         // UC2: Hardcoded Palindrome Check
         String word = "madam";
         String reversed = "";
-
         for (int i = word.length() - 1; i >= 0; i--) {
             reversed = reversed + word.charAt(i);
         }
-
         if (word.equals(reversed)) {
             System.out.println(word + " is a Palindrome");
         } else {
@@ -27,15 +25,36 @@ public class PalindromeCheckerApp {
         System.out.println("------------------------------------------");
         String input = "racecar";
         String reversedInput = "";
-
         for (int i = input.length() - 1; i >= 0; i--) {
             reversedInput = reversedInput + input.charAt(i);
         }
-
         if (input.equals(reversedInput)) {
             System.out.println(input + " is a Palindrome");
         } else {
             System.out.println(input + " is not a Palindrome");
+        }
+
+        // UC4: Character Array Based Palindrome Check
+        System.out.println("------------------------------------------");
+        String uc4Word = "level";
+        char[] chars = uc4Word.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+        boolean isPalindrome = true;
+
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        if (isPalindrome) {
+            System.out.println(uc4Word + " is a Palindrome");
+        } else {
+            System.out.println(uc4Word + " is not a Palindrome");
         }
     }
 }
