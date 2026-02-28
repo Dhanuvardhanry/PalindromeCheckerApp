@@ -1,4 +1,6 @@
 import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
@@ -63,27 +65,46 @@ public class PalindromeCheckerApp {
         System.out.println("------------------------------------------");
         String uc5Word = "noon";
         Stack<Character> stack = new Stack<>();
-
-        // Push all characters into stack
         for (int i = 0; i < uc5Word.length(); i++) {
             stack.push(uc5Word.charAt(i));
         }
-
-        // Pop characters and build reversed string
         String stackReversed = "";
         while (!stack.isEmpty()) {
             stackReversed = stackReversed + stack.pop();
         }
-
         if (uc5Word.equals(stackReversed)) {
             System.out.println(uc5Word + " is a Palindrome");
         } else {
             System.out.println(uc5Word + " is not a Palindrome");
         }
+
+        // UC6: Queue + Stack Based Palindrome Check
+        System.out.println("------------------------------------------");
+        String uc6Word = "civic";
+        Stack<Character> uc6Stack = new Stack<>();
+        Queue<Character> uc6Queue = new LinkedList<>();
+
+        // Push and Enqueue all characters
+        for (int i = 0; i < uc6Word.length(); i++) {
+            uc6Stack.push(uc6Word.charAt(i));
+            uc6Queue.add(uc6Word.charAt(i));
+        }
+
+        // Compare dequeue (FIFO) vs pop (LIFO)
+        boolean uc6IsPalindrome = true;
+        while (!uc6Stack.isEmpty() && !uc6Queue.isEmpty()) {
+            if (uc6Stack.pop() != uc6Queue.poll()) {
+                uc6IsPalindrome = false;
+                break;
+            }
+        }
+
+        if (uc6IsPalindrome) {
+            System.out.println(uc6Word + " is a Palindrome");
+        } else {
+            System.out.println(uc6Word + " is not a Palindrome");
+        }
     }
 }
-```
 
-        ---
 
-  
